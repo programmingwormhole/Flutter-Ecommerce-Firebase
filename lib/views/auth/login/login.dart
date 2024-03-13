@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pw_ecommerce/controllers/auth_controller.dart';
 import 'package:pw_ecommerce/views/auth/register/register.dart';
 import 'package:pw_ecommerce/views/home/home.dart';
 import 'package:pw_ecommerce/widgets/custom_app_bar.dart';
@@ -14,6 +15,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+
+    final controller = Get.put(AuthController());
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -39,17 +42,20 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      const CustomTextField(
+                      CustomTextField(
                         title: 'Email',
                         isRequired: true,
+                        onChanged: (email) => controller.email.value = email,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      const CustomTextField(
+                      CustomTextField(
                         title: 'Password',
                         isSecured: true,
                         isRequired: true,
+                        onChanged: (password) =>
+                            controller.password.value = password,
                       ),
                       const SizedBox(
                         height: 20,
@@ -67,13 +73,16 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      CustomButton(
-                        title: 'Sign In',
-                        onTap: () {
-                         if (formKey.currentState!.validate()) {
-                           Get.to(() => const HomeScreen());
-                         }
-                        },
+                      Obx(
+                        () => CustomButton(
+                          isLoading: controller.isLoading.value,
+                          title: 'Sign In',
+                          onTap: () {
+                            if (formKey.currentState!.validate()) {
+                              controller.login();
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 5,

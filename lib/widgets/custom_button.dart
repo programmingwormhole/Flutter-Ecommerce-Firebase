@@ -7,12 +7,15 @@ class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final Color? backgroundColor;
   final Color? textColor;
+  final bool? isLoading;
 
   const CustomButton({
     super.key,
     required this.title,
     this.onTap,
-    this.backgroundColor, this.textColor,
+    this.backgroundColor,
+    this.textColor,
+    this.isLoading,
   });
 
   @override
@@ -29,7 +32,30 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
-          child: Text(
+          child: isLoading == true ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Loading...',
+                style: TextStyle(
+                  color: textColor ?? Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              )
+            ],
+
+          ) : Text(
             title,
             style: TextStyle(
               color: textColor ?? Colors.white,

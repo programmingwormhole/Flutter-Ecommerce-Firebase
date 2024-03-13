@@ -5,17 +5,20 @@ class CustomTextField extends StatelessWidget {
   final String title;
   final bool? isSecured;
   final bool? isRequired;
+  final void Function(String)? onChanged;
 
   const CustomTextField({
     super.key,
     required this.title,
     this.isSecured,
     this.isRequired,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       validator: isRequired == true ? (String? value) {
         if (value == null || value.isEmpty) {
           return 'This field is required';
