@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final Widget? leading;
+  final List<Widget>? actions;
+  const CustomAppBar({super.key, this.leading, this.actions});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      leading: IconButton(
+      leading: leading ?? IconButton(
         onPressed: () {
           Get.back();
         },
@@ -16,6 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Icons.arrow_back,
         ),
       ),
+      actions: actions,
     );
   }
 
