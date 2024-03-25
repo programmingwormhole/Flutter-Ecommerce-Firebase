@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pw_ecommerce/controllers/cart_controller.dart';
 import 'package:pw_ecommerce/utils/colors.dart';
+import 'package:pw_ecommerce/views/payment_view/payment_view.dart';
 import 'package:pw_ecommerce/widgets/custom_app_bar.dart';
 import 'package:pw_ecommerce/widgets/custom_button.dart';
 
@@ -115,7 +116,17 @@ class CartScreen extends StatelessWidget {
                   title: 'Buy Now',
                   onTap: () {
                     final cartItem = controller.cart;
-                    print(cartItem.length);
+
+                    List<Map<String, dynamic>> cartData = cartItem
+                        .map((cart) => cart.data() as Map<String, dynamic>)
+                        .toList();
+
+                    Get.to(
+                      () => PaymentView(
+                        cartData: cartData,
+                        totalAmount: controller.totalPrice.value,
+                      ),
+                    );
                   },
                 ),
               ],
